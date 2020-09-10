@@ -1,24 +1,15 @@
 /*******************************************************************************
-  MPLAB Harmony Application Header File
-
-  Company:
-    Microchip Technology Inc.
-
   File Name:
     app.h
 
   Summary:
-    This header file provides prototypes and definitions for the application.
+
 
   Description:
-    This header file provides function prototypes and data type definitions for
-    the application.  Some of these are required by the system (such as the
-    "APP_Initialize" and "APP_Tasks" prototypes) and some of them are only used
-    internally by the application (such as the "APP_STATES" definition).  Both
-    are defined here for convenience.
-*******************************************************************************/
 
-//DOM-IGNORE-BEGIN
+ *******************************************************************************/
+
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 Copyright (c) 2013-2014 released Microchip Technology Inc.  All rights reserved.
 
@@ -41,33 +32,41 @@ CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
 SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
  *******************************************************************************/
-//DOM-IGNORE-END
+// DOM-IGNORE-END
 
 #ifndef _APP_H
 #define _APP_H
+
+#define WIFI_EASY_CONFIG_DEMO
+#define WIFI_EASY_CONFIG_DEMO_VERSION_NUMBER "1.0"
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
 #include "system_config.h"
 #include "system_definitions.h"
 
+#if defined(TCPIP_IF_MRF24WN) /* Wi-Fi Interface */
 #include "app_wifi_mrf24wn.h"
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
+#elif defined(TCPIP_IF_WINC1500)
+#include "app_wifi_winc1500.h"
 #endif
-// DOM-IGNORE-END 
+
+/* BSP LED and Switch Re-directs */
+/* This section is highly customizable based on application's specific needs. */
+#if defined(BSP_SWITCH_4StateGet) // very roughly assume that pic32mx795_pim__e16 is used
+
+#define APP_LED_1 BSP_LED_3
+#define APP_LED_2 BSP_LED_4
+#define APP_LED_3 BSP_LED_5
+
+#define APP_SWITCH_1StateGet() BSP_SWITCH_4StateGet()
+#define APP_SWITCH_2StateGet() BSP_SWITCH_5StateGet()
+#define APP_SWITCH_3StateGet() BSP_SWITCH_6StateGet()
+
+#elif !defined(BSP_SWITCH_2StateGet) // very roughly assume that pic32mz_ef_curiosity is used
 
 #define APP_LED_1 BSP_LED_1
 #define APP_LED_2 BSP_LED_2
@@ -77,8 +76,19 @@ extern "C" {
 #define APP_SWITCH_2StateGet() BSP_SWITCH_1StateGet()
 #define APP_SWITCH_3StateGet() BSP_SWITCH_1StateGet()
 
-#define WF_SCAN_RESULTS_BUFFER_SIZE 32
+#else
 
+#define APP_LED_1 BSP_LED_3
+#define APP_LED_2 BSP_LED_2
+#define APP_LED_3 BSP_LED_1
+
+#define APP_SWITCH_1StateGet() true // UART Console occupies this pin on PIC32 MZ EC/EF SK
+#define APP_SWITCH_2StateGet() BSP_SWITCH_2StateGet()
+#define APP_SWITCH_3StateGet() BSP_SWITCH_1StateGet()
+
+#endif
+
+#define WF_SCAN_RESULTS_BUFFER_SIZE 32
 
 // *****************************************************************************
 // *****************************************************************************
@@ -87,7 +97,7 @@ extern "C" {
 // *****************************************************************************
 
 // *****************************************************************************
-/* Application states
+/* Application States
 
   Summary:
     Application states enumeration
@@ -95,18 +105,72 @@ extern "C" {
   Description:
     This enumeration defines the valid application states.  These states
     determine the behavior of the application at various times.
-*/
+ */
+typedef enum
+{
+    /* The application mounts the disk. */
+    APP_MOUNT_DISK = 0,
+
+    /* In this state, the application waits for the initialization of the TCP/IP stack
+       to complete. */
+    APP_TCPIP_WAIT_INIT,
+
+    /* The application configures the Wi-Fi settings. */
+    APP_WIFI_CONFIG,
+
+    /* In this state, the application runs the Wi-Fi prescan. */
+    APP_WIFI_PRESCAN,
+
+    /* In this state, the application enables TCP/IP modules such as DHCP, NBNS and mDNS
+       in all available interfaces. */
+    APP_TCPIP_MODULES_ENABLE,
+
+    /* In this state, the application can do TCP/IP transactions. */
+    APP_TCPIP_TRANSACT,
+
+    /* In this state, the application performs module FW update over the air. */
+    APP_FW_OTA_UPDATE,
+
+    /* In this state, the application waits till FW update gets completed. */
+    APP_WAIT_FOR_FW_UPDATE,
+
+    /* The application waits in this state for the driver to be ready
+       before sending the "hello world" message. */
+    //APP_STATE_WAIT_FOR_READY,
+
+    /* The application waits in this state for the driver to finish
+       sending the message. */
+    //APP_STATE_WAIT_FOR_DONE,
+
+    /* The application does nothing in the idle state. */
+    //APP_STATE_IDLE
+
+    APP_USERIO_LED_DEASSERTED,
+
+    APP_USERIO_LED_ASSERTED,
+
+    APP_TCPIP_ERROR,
+
+} APP_STATE;
 
 typedef enum
 {
-	/* Application's state machine's initial state. */
-	APP_STATE_INIT=0,
-	APP_STATE_SERVICE_TASKS,
+    /* Initialize the state machine, and also checks if prescan is allowed. */
+    APP_WIFI_PRESCAN_INIT,
 
-	/* TODO: Define states used by the application state machine. */
+    /* In this state the application waits for the prescan to finish. */
+    APP_WIFI_PRESCAN_WAIT,
 
-} APP_STATES;
+    /* After prescan, Wi-Fi module is reset in this state. */
+    APP_WIFI_PRESCAN_RESET,
 
+    /* In this state, the application waits for Wi-Fi reset to finish. */
+    APP_WIFI_PRESCAN_WAIT_RESET,
+
+    /* Prescan is complete. */
+    APP_WIFI_PRESCAN_DONE,
+
+} APP_WIFI_PRESCAN_STATE;
 
 // *****************************************************************************
 /* Application Data
@@ -120,14 +184,23 @@ typedef enum
   Remarks:
     Application strings and buffers are be defined outside this structure.
  */
-
 typedef struct
 {
-    /* The application's current state */
-    APP_STATES state;
+    /* SYS_FS file handle */
+    SYS_FS_HANDLE fileHandle;
 
-    /* TODO: Define any additional data used by the application. */
+    /* application's current state */
+    APP_STATE state;
 
+    /* prescan's current state */
+    APP_WIFI_PRESCAN_STATE prescanState;
+
+    /* application data buffer */
+    //uint8_t data[64];
+
+    //uint32_t nBytesWritten;
+
+    //uint32_t nBytesRead;
 } APP_DATA;
 
 /* It is intentionally declared this way to sync with WDRV_DEVICE_TYPE. */
@@ -153,15 +226,6 @@ typedef struct {
     uint8_t securityKeyLen; // number of bytes in security key (can be 0)
 } WF_REDIRECTION_CONFIG;
 
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Callback Routines
-// *****************************************************************************
-// *****************************************************************************
-/* These routines are called by drivers when certain events occur.
-*/
-	
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -170,15 +234,14 @@ typedef struct {
 
 /*******************************************************************************
   Function:
-    void APP_Initialize ( void )
+    void APP_Initialize(void)
 
   Summary:
-     MPLAB Harmony application initialization routine.
+     This routine initializes the application object.
 
   Description:
-    This function initializes the Harmony application.  It places the 
-    application in its initial state and prepares it to run so that its 
-    APP_Tasks function can be called.
+    This routine initializes the application object. The application state is
+    set to wait for media attach.
 
   Precondition:
     All other system initialization routines should be called before calling
@@ -197,25 +260,22 @@ typedef struct {
 
   Remarks:
     This routine must be called from the SYS_Initialize function.
-*/
-
-void APP_Initialize ( void );
-
+ */
+void APP_Initialize(void);
 
 /*******************************************************************************
   Function:
-    void APP_Tasks ( void )
+    void APP_Tasks(void)
 
   Summary:
-    MPLAB Harmony Demo application tasks function
+    Application Tasks Function
 
   Description:
-    This routine is the Harmony Demo application's tasks function.  It
-    defines the application's state machine and core logic.
+    This routine implements the application in a non blocking manner.
 
   Precondition:
     The system and application initialization ("SYS_Initialize") should be
-    called before calling this.
+    called before calling this function.
 
   Parameters:
     None.
@@ -231,19 +291,35 @@ void APP_Initialize ( void );
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
+void APP_Tasks(void);
 
-void APP_Tasks( void );
+/*******************************************************************************
+  Function:
+    uint8_t APP_WIFI_Prescan(void)
 
+  Summary:
+    Wi-Fi Prescan Function
+
+  Description:
+    This function implements the Wi-Fi prescan in a non blocking manner.
+
+  Precondition:
+    The system and application initialization ("SYS_Initialize") should be
+    called before calling this function.
+
+  Parameters:
+    None.
+
+  Returns:
+    None.
+
+  Remarks:
+    None.
+ */
+uint8_t APP_WIFI_Prescan(void);
 
 #endif /* _APP_H */
 
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
-}
-#endif
-//DOM-IGNORE-END
-
 /*******************************************************************************
  End of File
- */
-
+*/
