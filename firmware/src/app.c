@@ -625,9 +625,9 @@ static void APP_TCPIP_IFModules_Disable(TCPIP_NET_HANDLE netH)
 
 	if (IS_WF_INTF(netName) && TCPIP_STACK_NetIsUp(netH))
 		APP_WIFI_PowerSave_Config(false);
-	TCPIP_DHCPS_Disable(netH);
+//	TCPIP_DHCPS_Disable(netH);  -- ignored after removing the module
 	TCPIP_DHCP_Disable(netH);
-	TCPIP_DNSS_Disable(netH);
+//	TCPIP_DNSS_Disable(netH);  -- ignored after removing the module
 	TCPIP_DNS_Disable(netH, true);
 	TCPIP_MDNS_ServiceDeregister(netH);
 }
@@ -645,13 +645,13 @@ static void APP_TCPIP_IFModules_Enable(TCPIP_NET_HANDLE netH)
 		iwpriv_get(OPERATIONMODE_GET, &s_app_get_param);
 		if (s_app_get_param.opMode.isServer) {
 			TCPIP_DHCP_Disable(netH); // must stop DHCP client first
-			TCPIP_DHCPS_Enable(netH); // start DHCP server
+//			TCPIP_DHCPS_Enable(netH); // start DHCP server  -- ignored after removing the module
 			TCPIP_DNS_Disable(netH, true);
-			TCPIP_DNSS_Enable(netH);
+//			TCPIP_DNSS_Enable(netH);  -- ignored after removing the module
 		} else {
-			TCPIP_DHCPS_Disable(netH); // must stop DHCP server first
+//			TCPIP_DHCPS_Disable(netH); // must stop DHCP server first  -- ignored after removing the module
 			TCPIP_DHCP_Enable(netH); // start DHCP client
-			TCPIP_DNSS_Disable(netH);
+//			TCPIP_DNSS_Disable(netH);  -- ignored after removing the module
 			TCPIP_DNS_Enable(netH, TCPIP_DNS_ENABLE_DEFAULT);
 		}
 		APP_WIFI_IPv6MulticastFilter_Set(netH);
