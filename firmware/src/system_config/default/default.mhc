@@ -5108,7 +5108,7 @@ CONFIG_USE_3RDPARTY_WOLFSSL=n
 #
 # from $HARMONY_VERSION_PATH/third_party/tcpip/config/wolfmqtt.hconfig
 #
-CONFIG_USE_3RDPARTY_WOLFMQTT=n
+CONFIG_USE_3RDPARTY_WOLFMQTT=y
 #
 # from $HARMONY_VERSION_PATH/third_party/tcpip/iniche/config/embtcp.hconfig
 #
