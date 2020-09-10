@@ -414,27 +414,6 @@ const ZCLL_MODULE_CONFIG tcpipZCLLInitData =
 };
 
 
-/*** DHCP server initialization data ***/
-TCPIP_DHCPS_ADDRESS_CONFIG DHCP_POOL_CONFIG[]=
-{
-    {
-        .interfaceIndex     = TCPIP_DHCP_SERVER_INTERFACE_INDEX_IDX0,
-        .serverIPAddress    = TCPIP_DHCPS_DEFAULT_SERVER_IP_ADDRESS_IDX0,
-        .startIPAddRange    = TCPIP_DHCPS_DEFAULT_IP_ADDRESS_RANGE_START_IDX0,
-        .ipMaskAddress      = TCPIP_DHCPS_DEFAULT_SERVER_NETMASK_ADDRESS_IDX0,
-        .priDNS             = TCPIP_DHCPS_DEFAULT_SERVER_PRIMARY_DNS_ADDRESS_IDX0,
-        .secondDNS          = TCPIP_DHCPS_DEFAULT_SERVER_SECONDARY_DNS_ADDRESS_IDX0,
-        .poolEnabled        = TCPIP_DHCP_SERVER_POOL_ENABLED_IDX0,
-    },
-};
-const TCPIP_DHCPS_MODULE_CONFIG tcpipDHCPSInitData =
-{
-    .enabled            = true,
-    .deleteOldLease     = TCPIP_DHCP_SERVER_DELETE_OLD_ENTRIES,
-    .leaseEntries       = TCPIP_DHCPS_LEASE_ENTRIES_DEFAULT,
-    .entrySolvedTmo     = TCPIP_DHCPS_LEASE_SOLVED_ENTRY_TMO,
-    .dhcpServer         = (TCPIP_DHCPS_ADDRESS_CONFIG*)DHCP_POOL_CONFIG,
-};
 
 
 /*** DNS Client Initialization Data ***/
@@ -448,14 +427,6 @@ const TCPIP_DNS_CLIENT_MODULE_CONFIG tcpipDNSClientInitData =
     .nIPv6Entries  = TCPIP_DNS_CLIENT_CACHE_PER_IPV6_ADDRESS,
 };
 
-/*** DNS Server Initialization Data ***/
-const TCPIP_DNSS_MODULE_CONFIG tcpipDNSServerInitData =
-{ 
-    .deleteOldLease			= TCPIP_DNSS_DELETE_OLD_LEASE,
-    .replyBoardAddr			= TCPIP_DNSS_REPLY_BOARD_ADDR,
-    .IPv4EntriesPerDNSName 	= TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS,
-	.IPv6EntriesPerDNSName 	= 0,
-};
 
 
 
@@ -496,10 +467,8 @@ const TCPIP_STACK_MODULE_CONFIG TCPIP_STACK_MODULE_CONFIG_TBL [] =
     {TCPIP_MODULE_UDP,              &tcpipUDPInitData},             // TCPIP_MODULE_UDP
     {TCPIP_MODULE_TCP,              &tcpipTCPInitData},             // TCPIP_MODULE_TCP
     {TCPIP_MODULE_DHCP_CLIENT,      &tcpipDHCPInitData},            // TCPIP_MODULE_DHCP_CLIENT
-    {TCPIP_MODULE_DHCP_SERVER,      &tcpipDHCPSInitData},           // TCPIP_MODULE_DHCP_SERVER
     {TCPIP_MODULE_ANNOUNCE,         &tcpipAnnounceInitData},        // TCPIP_MODULE_ANNOUNCE
     {TCPIP_MODULE_DNS_CLIENT,       &tcpipDNSClientInitData},       // TCPIP_MODULE_DNS_CLIENT
-    {TCPIP_MODULE_DNS_SERVER,       &tcpipDNSServerInitData},       // TCPIP_MODULE_DNS_SERVER
     {TCPIP_MODULE_NBNS,             &tcpipNBNSInitData},            // TCPIP_MODULE_NBNS
 
     {TCPIP_MODULE_HTTP_SERVER,      &tcpipHTTPInitData},            // TCPIP_MODULE_HTTP_SERVER
