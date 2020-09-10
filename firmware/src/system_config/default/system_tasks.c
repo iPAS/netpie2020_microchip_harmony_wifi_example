@@ -54,7 +54,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "system_config.h"
 #include "system_definitions.h"
-#include "app.h"
+#include "app_web_config.h"
 
 
 // *****************************************************************************
@@ -69,7 +69,7 @@ static void _SYS_Tasks ( void );
  
  
 
-static void _APP_Tasks(void);
+static void _APP_WEB_CONFIG_Tasks(void);
 
 
 // *****************************************************************************
@@ -96,9 +96,9 @@ void SYS_Tasks ( void )
  
  
 
-    /* Create OS Thread for APP Tasks. */
-    xTaskCreate((TaskFunction_t) _APP_Tasks,
-                "APP Tasks",
+    /* Create OS Thread for APP_WEB_CONFIG Tasks. */
+    xTaskCreate((TaskFunction_t) _APP_WEB_CONFIG_Tasks,
+                "APP_WEB_CONFIG Tasks",
                 2048, NULL, 2, NULL);
 
     /**************
@@ -154,17 +154,17 @@ static void _SYS_Tasks ( void)
 
 /*******************************************************************************
   Function:
-    void _APP_Tasks ( void )
+    void _APP_WEB_CONFIG_Tasks ( void )
 
   Summary:
-    Maintains state machine of APP.
+    Maintains state machine of APP_WEB_CONFIG.
 */
 
-static void _APP_Tasks(void)
+static void _APP_WEB_CONFIG_Tasks(void)
 {
     while(1)
     {
-        APP_Tasks();
+        APP_WEB_CONFIG_Tasks();
         vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }

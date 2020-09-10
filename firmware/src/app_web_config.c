@@ -40,7 +40,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 #include <sys/attribs.h>
-#include "app.h"
+#include "app_web_config.h"
 #include "app_commands.h"
 
 /*
@@ -160,12 +160,12 @@ static void APP_TCPIP_IF_Up(TCPIP_NET_HANDLE netH);
 
 /*******************************************************************************
   Function:
-    void APP_Initialize(void)
+    void APP_WEB_CONFIG_Initialize(void)
 
   Remarks:
     See prototype in app.h.
  */
-void APP_Initialize(void)
+void APP_WEB_CONFIG_Initialize(void)
 {
 #if (OSAL_USE_RTOS == 1 || OSAL_USE_RTOS == 9)
 	if (!APP_OSAL_MutexInit(&s_appLock)) {
@@ -416,12 +416,12 @@ static void firmware_update(TCPIP_NET_HANDLE *netHandleWiFi)
 
 /*******************************************************************************
   Function:
-    void APP_Tasks(void)
+    void APP_WEB_CONFIG_Tasks(void)
 
   Remarks:
     See prototype in app.h.
  */
-void APP_Tasks(void)
+void APP_WEB_CONFIG_Tasks(void)
 {
 	static int16_t ipWait = 0;
 	static IPV4_ADDR defaultIpWiFi = {-1};

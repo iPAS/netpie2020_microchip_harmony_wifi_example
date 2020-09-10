@@ -1025,7 +1025,7 @@ void SYS_Initialize ( void* data )
     sysObj.usbDevObject0 = USB_DEVICE_Initialize (USB_DEVICE_INDEX_0 , ( SYS_MODULE_INIT* ) & usbDevInitData);
 
     /* Initialize the Application */
-    APP_Initialize();
+    APP_WEB_CONFIG_Initialize();
 }
 
 

@@ -234,7 +234,7 @@ typedef struct {
 
 /*******************************************************************************
   Function:
-    void APP_Initialize(void)
+    void APP_WEB_CONFIG_Initialize(void)
 
   Summary:
      This routine initializes the application object.
@@ -261,11 +261,11 @@ typedef struct {
   Remarks:
     This routine must be called from the SYS_Initialize function.
  */
-void APP_Initialize(void);
+void APP_WEB_CONFIG_Initialize(void);
 
 /*******************************************************************************
   Function:
-    void APP_Tasks(void)
+    void APP_WEB_CONFIG_Tasks(void)
 
   Summary:
     Application Tasks Function
@@ -291,7 +291,7 @@ void APP_Initialize(void);
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
-void APP_Tasks(void);
+void APP_WEB_CONFIG_Tasks(void);
 
 /*******************************************************************************
   Function:
