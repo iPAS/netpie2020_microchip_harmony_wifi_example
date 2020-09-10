@@ -455,33 +455,6 @@ extern "C" {
 #define TCPIP_DHCP_SERVER_LISTEN_PORT               67
 #define TCPIP_DHCP_CLIENT_ENABLED                   true
 
-/*** DHCP Server Configuration ***/
-#define TCPIP_STACK_USE_DHCP_SERVER
-#define TCPIP_DHCPS_TASK_PROCESS_RATE                               200
-#define TCPIP_DHCPS_LEASE_ENTRIES_DEFAULT                           15
-#define TCPIP_DHCPS_LEASE_SOLVED_ENTRY_TMO                          1200
-#define TCPIP_DHCPS_LEASE_REMOVED_BEFORE_ACK                        5
-#define TCPIP_DHCP_SERVER_DELETE_OLD_ENTRIES                        true
-#define TCPIP_DHCPS_LEASE_DURATION	TCPIP_DHCPS_LEASE_SOLVED_ENTRY_TMO
-
-/*** DHCP Server Instance 0 Configuration ***/
-#define TCPIP_DHCPS_DEFAULT_IP_ADDRESS_RANGE_START_IDX0             "192.168.1.100"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_IP_ADDRESS_IDX0                  "192.168.1.1"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_NETMASK_ADDRESS_IDX0             "255.255.255.0"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_GATEWAY_ADDRESS_IDX0             "192.168.1.1"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_PRIMARY_DNS_ADDRESS_IDX0         "192.168.1.1"
-
-#define TCPIP_DHCPS_DEFAULT_SERVER_SECONDARY_DNS_ADDRESS_IDX0       "192.168.1.1"
-
-#define TCPIP_DHCP_SERVER_INTERFACE_INDEX_IDX0                      0
-
-#define TCPIP_DHCP_SERVER_POOL_ENABLED_IDX0                         true
-
-
 
 /*** DNS Client Configuration ***/
 #define TCPIP_STACK_USE_DNS
@@ -500,18 +473,6 @@ extern "C" {
 #define TCPIP_DNS_CLIENT_DELETE_OLD_ENTRIES			true
 #define TCPIP_DNS_CLIENT_USER_NOTIFICATION   false
 
-/*** DNS Server Configuration ***/
-#define TCPIP_STACK_USE_DNS_SERVER
-#define TCPIP_DNSS_HOST_NAME_LEN		    		64
-#define TCPIP_DNSS_REPLY_BOARD_ADDR				true
-#define TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS			2
-#define TCPIP_DNSS_CACHE_PER_IPV6_ADDRESS			
-#define TCPIP_DNSS_TTL_TIME							600
-#define TCPIP_DNSS_TASK_PROCESS_RATE			    33
-#define TCPIP_DNSS_DELETE_OLD_LEASE				true
-
-/***Maximum DNS server Cache entries. It is the sum of TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS and TCPIP_DNSS_CACHE_PER_IPV6_ADDRESS.***/
-#define TCPIP_DNSS_CACHE_MAX_SERVER_ENTRIES     (TCPIP_DNSS_CACHE_PER_IPV4_ADDRESS+TCPIP_DNSS_CACHE_PER_IPV6_ADDRESS)
 
 
 /*** HTTP Configuration ***/

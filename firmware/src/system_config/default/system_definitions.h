@@ -74,7 +74,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "driver/wifi/mrf24wn/include/wdrv_mrf24wn_api.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "app.h"
+#include "app_web_config.h"
 
 
 // DOM-IGNORE-BEGIN
