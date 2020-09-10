@@ -41,7 +41,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 #include <sys/attribs.h>
 #include "app_web_config.h"
-#include "app_commands.h"
+#include "web_config_commands.h"
 
 /*
  * OSAL_USE_RTOS == 1 means FreeRTOS version 8.x.x is used.
