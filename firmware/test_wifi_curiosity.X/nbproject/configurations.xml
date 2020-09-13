@@ -5,6 +5,9 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f3" displayName="app" projectFiles="true">
+        <logicalFolder name="f2" displayName="parson" projectFiles="true">
+          <itemPath>../src/parson/parson.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="system_config" projectFiles="true">
           <logicalFolder name="f1" displayName="default" projectFiles="true">
             <logicalFolder name="f2" displayName="bsp" projectFiles="true">
@@ -487,6 +490,9 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f3" displayName="app" projectFiles="true">
+        <logicalFolder name="f2" displayName="parson" projectFiles="true">
+          <itemPath>../src/parson/parson.c</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="system_config" projectFiles="true">
           <logicalFolder name="f1" displayName="default" projectFiles="true">
             <logicalFolder name="f2" displayName="bsp" projectFiles="true">
