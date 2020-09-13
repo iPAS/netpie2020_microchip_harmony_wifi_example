@@ -74,6 +74,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "driver/wifi/mrf24wn/include/wdrv_mrf24wn_api.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "net/pres/net_pres.h"
+#include "net/pres/net_pres_encryptionproviderapi.h"
+#include "net/pres/net_pres_transportapi.h"
+#include "net/pres/net_pres_socketapi.h"
 #include "app_web_config.h"
 #include "app_logger.h"
 #include "app_netpie.h"
@@ -127,6 +131,7 @@ typedef struct
 
 
     SYS_MODULE_OBJ  tcpip;
+    SYS_MODULE_OBJ  netPres;
 
 } SYSTEM_OBJECTS;
 

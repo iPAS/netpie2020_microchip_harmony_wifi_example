@@ -383,6 +383,10 @@ extern "C" {
 #define NO_ASN
 #define NO_RSA
 
+/* MPLAB Harmony Net Presentation Layer Definitions*/
+#define NET_PRES_NUM_INSTANCE 1
+#define NET_PRES_NUM_SOCKETS 10
+
 /*** OSAL Configuration ***/
 #define OSAL_USE_RTOS          9
 

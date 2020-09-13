@@ -163,6 +163,7 @@ static void _SYS_Tasks ( void)
     USB_DEVICE_Tasks(sysObj.usbDevObject0);
     /* Maintain the TCP/IP Stack*/
     TCPIP_STACK_Task(sysObj.tcpip);
+    NET_PRES_Tasks(sysObj.netPres);
 
         /* Task Delay */
         vTaskDelay(1 / portTICK_PERIOD_MS);

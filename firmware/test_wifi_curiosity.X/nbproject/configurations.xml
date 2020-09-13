@@ -11,7 +11,12 @@
               <itemPath>../src/system_config/default/bsp/bsp.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="framework" projectFiles="true">
-              <logicalFolder name="f1" displayName="system" projectFiles="true">
+              <logicalFolder name="f1" displayName="net" projectFiles="true">
+                <logicalFolder name="f1" displayName="pres" projectFiles="true">
+                  <itemPath>../src/system_config/default/framework/net/pres/net_pres_enc_glue.h</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="system" projectFiles="true">
                 <logicalFolder name="f1" displayName="devcon" projectFiles="true">
                   <logicalFolder name="f1" displayName="src" projectFiles="true">
                     <itemPath>../src/system_config/default/framework/system/devcon/src/sys_devcon_local.h</itemPath>
@@ -178,12 +183,20 @@
           <itemPath>../../../../framework/driver/driver.h</itemPath>
           <itemPath>../../../../framework/driver/driver_common.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f6" displayName="net" projectFiles="true">
+        <logicalFolder name="f4" displayName="net" projectFiles="true">
           <logicalFolder name="f1" displayName="pres" projectFiles="true">
+            <logicalFolder name="f1" displayName="src" projectFiles="true">
+              <itemPath>../../../../framework/net/pres/src/net_pres_local.h</itemPath>
+            </logicalFolder>
             <itemPath>../../../../framework/net/pres/net_pres.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_certstore.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_encryptionproviderapi.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_socketapi.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_transportapi.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_socketapiconversion.h</itemPath>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f4" displayName="osal" projectFiles="true">
+        <logicalFolder name="f5" displayName="osal" projectFiles="true">
           <itemPath>../../../../framework/osal/osal.h</itemPath>
           <itemPath>../../../../framework/osal/osal_definitions.h</itemPath>
           <itemPath>../../../../framework/osal/osal_freertos.h</itemPath>
@@ -278,7 +291,7 @@
           </logicalFolder>
           <itemPath>../../../../framework/system/system.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f5" displayName="tcpip" projectFiles="true">
+        <logicalFolder name="f6" displayName="tcpip" projectFiles="true">
           <logicalFolder name="f1" displayName="src" projectFiles="true">
             <logicalFolder name="f2" displayName="common" projectFiles="true">
               <itemPath>../../../../framework/tcpip/src/common/sys_fs_wrapper.h</itemPath>
@@ -489,7 +502,12 @@
                   </logicalFolder>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="system" projectFiles="true">
+              <logicalFolder name="f2" displayName="net" projectFiles="true">
+                <logicalFolder name="f1" displayName="pres" projectFiles="true">
+                  <itemPath>../src/system_config/default/framework/net/pres/net_pres_enc_glue.c</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+              <logicalFolder name="f3" displayName="system" projectFiles="true">
                 <logicalFolder name="f1" displayName="clk" projectFiles="true">
                   <logicalFolder name="f1" displayName="src" projectFiles="true">
                     <itemPath>../src/system_config/default/framework/system/clk/src/sys_clk_pic32mz.c</itemPath>
@@ -633,12 +651,19 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f3" displayName="osal" projectFiles="true">
+        <logicalFolder name="f3" displayName="net" projectFiles="true">
+          <logicalFolder name="f1" displayName="pres" projectFiles="true">
+            <logicalFolder name="f1" displayName="src" projectFiles="true">
+              <itemPath>../../../../framework/net/pres/src/net_pres.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="f4" displayName="osal" projectFiles="true">
           <logicalFolder name="f1" displayName="src" projectFiles="true">
             <itemPath>../../../../framework/osal/src/osal_freertos.c</itemPath>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f4" displayName="system" projectFiles="true">
+        <logicalFolder name="f5" displayName="system" projectFiles="true">
           <logicalFolder name="f2" displayName="command" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../../../../framework/system/command/src/sys_command.c</itemPath>
@@ -689,7 +714,7 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f5" displayName="tcpip" projectFiles="true">
+        <logicalFolder name="f6" displayName="tcpip" projectFiles="true">
           <logicalFolder name="f1" displayName="src" projectFiles="true">
             <logicalFolder name="f1" displayName="common" projectFiles="true">
               <itemPath>../../../../framework/tcpip/src/common/sys_fs_wrapper.c</itemPath>
@@ -720,7 +745,7 @@
             <itemPath>../../../../framework/tcpip/src/tcpip_packet.c</itemPath>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f6" displayName="usb" projectFiles="true">
+        <logicalFolder name="f7" displayName="usb" projectFiles="true">
           <logicalFolder name="f1" displayName="src" projectFiles="true">
             <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
               <itemPath>../../../../framework/usb/src/dynamic/usb_device.c</itemPath>
