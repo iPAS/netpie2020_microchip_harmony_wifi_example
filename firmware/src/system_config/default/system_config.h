@@ -58,6 +58,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     define this configuration.
 */
 #include "bsp.h"
+#include "wifi_config.h"  // -- Keep me please, for definition
 
 
 // DOM-IGNORE-BEGIN
@@ -353,12 +354,12 @@ extern "C" {
 
 #define WDRV_DEFAULT_NETWORK_TYPE WDRV_NETWORK_TYPE_INFRASTRUCTURE
 #define WDRV_DEFAULT_CHANNEL 6
-#define WDRV_DEFAULT_SSID WIFI_SSID
+#define WDRV_DEFAULT_SSID WIFI_SSID  // -- find me in wifi_config.h
 
 #define WDRV_DEFAULT_SECURITY_MODE WDRV_SECURITY_WPA2_WITH_PASS_PHRASE
 #define WDRV_DEFAULT_WEP_KEYS_40 "5AFB6C8E77" // default WEP40 key
 #define WDRV_DEFAULT_WEP_KEYS_104 "90E96780C739409DA50034FCAA" // default WEP104 key
-#define WDRV_DEFAULT_PSK_PHRASE WIFI_PHRASE // customized WPA-PSK or WPA2-PSK passphrase
+#define WDRV_DEFAULT_PSK_PHRASE WIFI_PHRASE // customized WPA-PSK or WPA2-PSK passphrase -- find me in wifi_config.h
 #define WDRV_DEFAULT_WPS_PIN "12390212" // default WPS PIN
 
 #define WDRV_DEFAULT_POWER_SAVE WDRV_FUNC_DISABLED

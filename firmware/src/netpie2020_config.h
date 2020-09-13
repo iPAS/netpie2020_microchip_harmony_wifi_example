@@ -26,27 +26,28 @@ extern "C" {
     
 /** Please define the following macros by looking in the NETPIE2020 dashboard.
  */
-#define NETPIE_DEVICE_NAME  "**FILL_ME**"
-#define NETPIE_CLIENT_ID    "**FILL_ME**"
-#define NETPIE_TOKEN        "**FILL_ME**"
-#define NETPIE_SECRET       "**FILL_ME**"
+//#define NETPIE_DEVICE_NAME  ""
+//#define NETPIE_CLIENT_ID    ""
+//#define NETPIE_TOKEN        ""
+//#define NETPIE_SECRET       ""
 
 #if !defined(NETPIE_DEVICE_NAME)
 #define NETPIE_DEVICE_NAME "netpie_dev" 
-#warning NETPIE_DEVICE_NAME can be declared here.
+#warning "NETPIE_DEVICE_NAME can be declared here."
 #endif
 
 #if !defined(NETPIE_CLIENT_ID)
-#error NETPIE_CLIENT_ID declaration is required!
+#error "NETPIE_CLIENT_ID declaration is required!"
 #endif
     
 #if !defined(NETPIE_TOKEN)
-#error NETPIE_TOKEN declaration is required!
+#error "NETPIE_TOKEN declaration is required!"
 #endif
     
 #if !defined(NETPIE_SECRET)
-#error NETPIE_SECRET declaration is required!
+#error "NETPIE_SECRET declaration is required!"
 #endif
+
 
     /* Provide C++ Compatibility */
 #ifdef __cplusplus
