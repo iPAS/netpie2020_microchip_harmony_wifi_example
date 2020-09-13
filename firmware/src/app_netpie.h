@@ -43,6 +43,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 //DOM-IGNORE-END
 
+
 #ifndef _APP_NETPIE_H
 #define _APP_NETPIE_H
 
@@ -59,14 +60,17 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system_config.h"
 #include "system_definitions.h"
 
+#include <wolfmqtt/mqtt_client.h>
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
 extern "C" {
 
 #endif
-// DOM-IGNORE-END 
+// DOM-IGNORE-END
 
+    
 // *****************************************************************************
 // *****************************************************************************
 // Section: Type Definitions
@@ -83,14 +87,22 @@ extern "C" {
     This enumeration defines the valid application states.  These states
     determine the behavior of the application at various times.
 */
-
 typedef enum
 {
 	/* Application's state machine's initial state. */
-	APP_NETPIE_STATE_INIT=0,
-	APP_NETPIE_STATE_SERVICE_TASKS,
+    APP_NETPIE_STATE_INIT = 0,
 
-	/* TODO: Define states used by the application state machine. */
+    APP_NETPIE_STATE_TCPIP_WAIT_INIT,
+    APP_NETPIE_STATE_TCPIP_WAIT_FOR_IP,
+
+    APP_NETPIE_STATE_MQTT_INIT,
+    APP_NETPIE_STATE_MQTT_NET_CONNECT,
+    APP_NETPIE_STATE_MQTT_PROTOCOL_CONNECT,
+    APP_NETPIE_STATE_MQTT_SUBSCRIBE,
+    APP_NETPIE_STATE_MQTT_LOOP,
+
+    APP_NETPIE_STATE_TCPIP_ERROR,
+    APP_NETPIE_STATE_FATAL_ERROR,
 
 } APP_NETPIE_STATES;
 
@@ -107,15 +119,41 @@ typedef enum
   Remarks:
     Application strings and buffers are be defined outside this structure.
  */
-
 typedef struct
 {
     /* The application's current state */
     APP_NETPIE_STATES state;
 
-    /* TODO: Define any additional data used by the application. */
+    // Timers
+    uint32_t genericUseTimer;
+    uint32_t mqttKeepAlive;
+    uint32_t mqttUpdateStatus;
+
+    /* TCPIP & MQTT */
+    char macAddress[12 + 1];
+    //__attribute__ ((aligned(4))) 
+    char host[30];  // The endpoint to access the broker.
+    IP_MULTI_ADDRESS host_ipv4;  // The endpoint IP address location.
+    TCP_PORT         port;
+
+    NET_PRES_SKT_HANDLE_T socket;
+    NET_PRES_SKT_ERROR_T  error;
+
+    MqttClient mqttClient;
+    MqttNet    mqttNet;
+
+    /* Debug Variables */
+    bool socket_connected;
+    bool mqtt_connected;
+    IP_MULTI_ADDRESS board_ipAddr;
 
 } APP_NETPIE_DATA;
+
+
+// *****************************************************************************
+/* Callback functions
+ */
+typedef void (*netpie_callback_t)(const char *sub_topic, const char *message);
 
 
 // *****************************************************************************
@@ -123,9 +161,11 @@ typedef struct
 // Section: Application Callback Routines
 // *****************************************************************************
 // *****************************************************************************
+
 /* These routines are called by drivers when certain events occur.
 */
-	
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -162,7 +202,6 @@ typedef struct
   Remarks:
     This routine must be called from the SYS_Initialize function.
 */
-
 void APP_NETPIE_Initialize ( void );
 
 
@@ -195,8 +234,19 @@ void APP_NETPIE_Initialize ( void );
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
-
 void APP_NETPIE_Tasks( void );
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Global Functions for other module
+// *****************************************************************************
+// *****************************************************************************
+
+extern bool netpie_ready(void);
+extern int  netpie_publish_log(const char *message);  // Publish message to logging channel
+extern int  netpie_publish_register(const char *sub_topic, const char *message);  // Publish the update of register at address.
+extern void netpie_set_callback(netpie_callback_t cb);  // Set the callback function for updating register as request.
 
 
 #endif /* _APP_NETPIE_H */

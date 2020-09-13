@@ -67,6 +67,7 @@ extern "C" {
 #endif
 // DOM-IGNORE-END 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Type Definitions
@@ -88,9 +89,7 @@ typedef enum
 {
 	/* Application's state machine's initial state. */
 	APP_PUBSUB_STATE_INIT=0,
-	APP_PUBSUB_STATE_SERVICE_TASKS,
-
-	/* TODO: Define states used by the application state machine. */
+	APP_PUBSUB_STATE_REGISTER_UPDATE,
 
 } APP_PUBSUB_STATES;
 
@@ -112,8 +111,6 @@ typedef struct
 {
     /* The application's current state */
     APP_PUBSUB_STATES state;
-
-    /* TODO: Define any additional data used by the application. */
 
 } APP_PUBSUB_DATA;
 
@@ -210,4 +207,3 @@ void APP_PUBSUB_Tasks( void );
 /*******************************************************************************
  End of File
  */
-
