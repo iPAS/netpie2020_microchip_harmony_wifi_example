@@ -55,6 +55,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system_config.h"
 #include "system_definitions.h"
 #include "app_web_config.h"
+#include "app_logger.h"
 
 
 // *****************************************************************************
@@ -70,6 +71,7 @@ static void _SYS_Tasks ( void );
  
 
 static void _APP_WEB_CONFIG_Tasks(void);
+static void _APP_LOGGER_Tasks(void);
 
 
 // *****************************************************************************
@@ -100,6 +102,11 @@ void SYS_Tasks ( void )
     xTaskCreate((TaskFunction_t) _APP_WEB_CONFIG_Tasks,
                 "APP_WEB_CONFIG Tasks",
                 2048, NULL, 2, NULL);
+
+    /* Create OS Thread for APP_LOGGER Tasks. */
+    xTaskCreate((TaskFunction_t) _APP_LOGGER_Tasks,
+                "APP_LOGGER Tasks",
+                2048, NULL, 1, NULL);
 
     /**************
      * Start RTOS * 
@@ -165,6 +172,24 @@ static void _APP_WEB_CONFIG_Tasks(void)
     while(1)
     {
         APP_WEB_CONFIG_Tasks();
+        vTaskDelay(1 / portTICK_PERIOD_MS);
+    }
+}
+
+
+/*******************************************************************************
+  Function:
+    void _APP_LOGGER_Tasks ( void )
+
+  Summary:
+    Maintains state machine of APP_LOGGER.
+*/
+
+static void _APP_LOGGER_Tasks(void)
+{
+    while(1)
+    {
+        APP_LOGGER_Tasks();
         vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
