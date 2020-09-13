@@ -89,9 +89,6 @@ typedef enum
 	/* Application's state machine's initial state. */
 	APP_LOGGER_STATE_INIT=0,
 	APP_LOGGER_STATE_SERVICE_TASKS,
-
-	/* TODO: Define states used by the application state machine. */
-
 } APP_LOGGER_STATES;
 
 
@@ -107,15 +104,26 @@ typedef enum
   Remarks:
     Application strings and buffers are be defined outside this structure.
  */
-
 typedef struct
 {
     /* The application's current state */
     APP_LOGGER_STATES state;
 
     /* TODO: Define any additional data used by the application. */
+    DRV_HANDLE handleUSART;
 
+    /* RTOS Queues */
+    QueueHandle_t q_tx;
+    QueueHandle_t q_rx;
+    
 } APP_LOGGER_DATA;
+
+
+// *****************************************************************************
+/* Queue Management
+ */
+#define LOGGER_QUEUE_SIZE 10
+#define LOGGER_QUEUE_ITEM_SIZE 200
 
 
 // *****************************************************************************
@@ -123,8 +131,10 @@ typedef struct
 // Section: Application Callback Routines
 // *****************************************************************************
 // *****************************************************************************
+
 /* These routines are called by drivers when certain events occur.
 */
+
 	
 // *****************************************************************************
 // *****************************************************************************
@@ -162,7 +172,6 @@ typedef struct
   Remarks:
     This routine must be called from the SYS_Initialize function.
 */
-
 void APP_LOGGER_Initialize ( void );
 
 
@@ -195,8 +204,19 @@ void APP_LOGGER_Initialize ( void );
   Remarks:
     This routine must be called from SYS_Tasks() routine.
  */
-
 void APP_LOGGER_Tasks( void );
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Global Functions for other module
+// *****************************************************************************
+// *****************************************************************************
+
+/**
+ * Enqueue a message to UART Tx
+ */
+BaseType_t logger_send_tx_queue(const char *fmt, ... );
 
 
 #endif /* _APP_LOGGER_H */

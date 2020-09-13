@@ -55,6 +55,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "app_logger.h"
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -76,7 +77,20 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_LOGGER_DATA app_loggerData;
+static APP_LOGGER_DATA app_Data;
+static enum 
+{
+    USART_BM_INIT,
+    USART_BM_WORKING,
+    USART_BM_DONE,
+} usartBMState;
+
+typedef struct
+{
+    uint8_t buffer[LOGGER_QUEUE_ITEM_SIZE];
+    uint8_t length;
+} logger_queue_item_t;
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -87,15 +101,102 @@ APP_LOGGER_DATA app_loggerData;
 /* TODO:  Add any necessary callback functions.
 */
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
 
+/**
+ * Enqueue a message to UART Tx
+ */
+BaseType_t logger_send_tx_queue(const char *fmt, ... )
+{
+    va_list args;
+    logger_queue_item_t q_item;
+    uint16_t len;
 
-/* TODO:  Add any necessary local functions.
+    va_start(args, fmt);
+    len = vsnprintf(q_item.buffer, LOGGER_QUEUE_ITEM_SIZE, fmt, args);
+    va_end(args);
+
+    q_item.length = strlen(q_item.buffer);
+    return xQueueSendToBack(app_Data.q_tx, &q_item, 0);
+}
+
+
+/******************************************************************************
+  Function:
+    static void USART_Task (void)
+    
+   Remarks:
+    Feeds the USART transmitter by reading characters from a specified pipe.  The pipeRead function is a 
+    standard interface that allows data to be exchanged between different automatically 
+    generated application modules.  Typically, the pipe is connected to the application's
+    USART receive function, but could be any other Harmony module which supports the pipe interface. 
 */
+static void USART_Task (void)
+{
+    switch (usartBMState)
+    {
+        default:
+        case USART_BM_INIT:
+        {            
+            usartBMState = USART_BM_WORKING;
+            break;
+        }
+
+        case USART_BM_WORKING:
+        {
+            // ******
+            // * TX *
+// --           while (!DRV_USART_TransmitBufferIsFull(app_Data.handleUSART))
+// --           {
+                static uint8_t index = 0;
+                static logger_queue_item_t q_item;
+                bool do_send = true;
+
+                if (index == 0)
+                {
+                    //uxQueueMessagesWaiting();
+                    do_send = xQueueReceive(app_Data.q_tx, &q_item, 0);
+                }
+
+                if (do_send)
+                {
+/* -- Remove for SYS_CONSOLE --
+                    DRV_USART_WriteByte(app_Data.handleUSART, q_item.buffer[index]);
+                    index = (index == q_item.length-1)? 0 : index+1;
+*/
+                    
+                    SYS_CONSOLE_PRINT("%.*s", q_item.length, q_item.buffer);
+                }
+// --           }
+
+            // ******
+            // * RX *
+/* -- Remove for SYS_CONSOLE --
+            while (!DRV_USART_ReceiverBufferIsEmpty(app_Data.handleUSART))
+            {
+                if (uxQueueSpacesAvailable(app_Data.q_rx) > 0)
+                {
+                    uint8_t c_rx = DRV_USART_ReadByte(app_Data.handleUSART);
+                }
+            }
+*/
+            usartBMState = USART_BM_DONE;
+            break;
+        }
+
+        case USART_BM_DONE:
+        {
+            vTaskDelay(1 / portTICK_PERIOD_MS);
+            usartBMState = USART_BM_WORKING;
+            break;
+        }
+    }
+}
 
 
 // *****************************************************************************
@@ -111,16 +212,22 @@ APP_LOGGER_DATA app_loggerData;
   Remarks:
     See prototype in app_logger.h.
  */
-
 void APP_LOGGER_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
-    app_loggerData.state = APP_LOGGER_STATE_INIT;
+    app_Data.state = APP_LOGGER_STATE_INIT;
 
+    app_Data.handleUSART = DRV_HANDLE_INVALID;
     
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
+    /* Message queue */
+    app_Data.q_tx = xQueueCreate(LOGGER_QUEUE_SIZE, sizeof(logger_queue_item_t));
+    app_Data.q_rx = xQueueCreate(LOGGER_QUEUE_SIZE, sizeof(logger_queue_item_t));
+    if (app_Data.q_tx == NULL || app_Data.q_rx == NULL)
+    {
+        // Some error
+    }
+    xQueueReset(app_Data.q_tx);
+    xQueueReset(app_Data.q_rx);
 }
 
 
@@ -131,34 +238,44 @@ void APP_LOGGER_Initialize ( void )
   Remarks:
     See prototype in app_logger.h.
  */
-
 void APP_LOGGER_Tasks ( void )
 {
 
     /* Check the application's current state. */
-    switch ( app_loggerData.state )
+    switch ( app_Data.state )
     {
         /* Application's initial state. */
         case APP_LOGGER_STATE_INIT:
         {
             bool appInitialized = true;
-       
-        
+/* -- Remove for SYS_CONSOLE --
+            if (app_Data.handleUSART == DRV_HANDLE_INVALID)
+            {
+                app_Data.handleUSART = DRV_USART_Open(
+                        APP_LOGGER_DRV_USART, 
+                        DRV_IO_INTENT_READWRITE|DRV_IO_INTENT_NONBLOCKING);
+                appInitialized &= ( DRV_HANDLE_INVALID != app_Data.handleUSART );
+            }
+*/
             if (appInitialized)
             {
+                /* initialize the USART state machine */
+                usartBMState = USART_BM_INIT;
             
-                app_loggerData.state = APP_LOGGER_STATE_SERVICE_TASKS;
+                app_Data.state = APP_LOGGER_STATE_SERVICE_TASKS;
+            
+// --                DRV_USART_WriteByte(app_Data.handleUSART, '.');  // DEBUG: iPAS
+                logger_send_tx_queue("Logger ready..\r\n");
             }
             break;
         }
 
         case APP_LOGGER_STATE_SERVICE_TASKS:
         {
+			USART_Task();
+        
             break;
         }
-
-        /* TODO: implement your application state machine.*/
-        
 
         /* The default state should never be executed. */
         default:
@@ -168,7 +285,6 @@ void APP_LOGGER_Tasks ( void )
         }
     }
 }
-
  
 
 /*******************************************************************************
