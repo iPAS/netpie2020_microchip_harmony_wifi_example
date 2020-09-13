@@ -26,18 +26,10 @@ extern "C" {
     
 /** Please define the following macros by looking in the NETPIE2020 dashboard.
  */
-//#define NETPIE_DEVICE_NAME  ""
-//#define NETPIE_CLIENT_ID    ""
-//#define NETPIE_TOKEN        ""
-//#define NETPIE_SECRET       ""
-   
-// From: https://docs.microsoft.com/en-us/azure/devops/repos/git/ignore-files?view=azure-devops&tabs=visual-studio 
-// git update-index --skip-worktree firmware/src/netpie2020_config.h
-// 
-#define NETPIE_DEVICE_NAME  "dev_rtu"
-#define NETPIE_CLIENT_ID    "***REMOVED***"
-#define NETPIE_TOKEN        "***REMOVED***"
-#define NETPIE_SECRET       "***REMOVED***"
+#define NETPIE_DEVICE_NAME  "**FILL_ME**"
+#define NETPIE_CLIENT_ID    "**FILL_ME**"
+#define NETPIE_TOKEN        "**FILL_ME**"
+#define NETPIE_SECRET       "**FILL_ME**"
 
 #if !defined(NETPIE_DEVICE_NAME)
 #define NETPIE_DEVICE_NAME "netpie_dev" 
