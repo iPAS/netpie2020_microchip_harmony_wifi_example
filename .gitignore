@@ -11,4 +11,7 @@
 **/*.X/dist
 **/*.X/build
 
+**/wifi_config.h
+**/netpie2020_config.h
+
 /firmware/test_uart_ping_tcp_mqtt.X/nbproject/private/
