@@ -1027,6 +1027,8 @@ void SYS_Initialize ( void* data )
     /* Initialize the Application */
     APP_WEB_CONFIG_Initialize();
     APP_LOGGER_Initialize();
+    APP_NETPIE_Initialize();
+    APP_PUBSUB_Initialize();
 }
 
 

@@ -76,6 +76,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "task.h"
 #include "app_web_config.h"
 #include "app_logger.h"
+#include "app_netpie.h"
+#include "app_pubsub.h"
 
 
 // DOM-IGNORE-BEGIN
