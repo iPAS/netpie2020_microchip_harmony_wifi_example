@@ -61,6 +61,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "system/common/sys_common.h"
 #include "app_web_config.h"
+#include "app_logger.h"
+#include "app_netpie.h"
+#include "app_pubsub.h"
 #include "system_definitions.h"
 
 // *****************************************************************************

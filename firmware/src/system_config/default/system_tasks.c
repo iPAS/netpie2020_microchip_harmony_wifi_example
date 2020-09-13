@@ -55,6 +55,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system_config.h"
 #include "system_definitions.h"
 #include "app_web_config.h"
+#include "app_logger.h"
+#include "app_netpie.h"
+#include "app_pubsub.h"
 
 
 // *****************************************************************************
@@ -70,6 +73,9 @@ static void _SYS_Tasks ( void );
  
 
 static void _APP_WEB_CONFIG_Tasks(void);
+static void _APP_LOGGER_Tasks(void);
+static void _APP_NETPIE_Tasks(void);
+static void _APP_PUBSUB_Tasks(void);
 
 
 // *****************************************************************************
@@ -100,6 +106,21 @@ void SYS_Tasks ( void )
     xTaskCreate((TaskFunction_t) _APP_WEB_CONFIG_Tasks,
                 "APP_WEB_CONFIG Tasks",
                 2048, NULL, 2, NULL);
+
+    /* Create OS Thread for APP_LOGGER Tasks. */
+    xTaskCreate((TaskFunction_t) _APP_LOGGER_Tasks,
+                "APP_LOGGER Tasks",
+                1024, NULL, 1, NULL);
+
+    /* Create OS Thread for APP_NETPIE Tasks. */
+    xTaskCreate((TaskFunction_t) _APP_NETPIE_Tasks,
+                "APP_NETPIE Tasks",
+                1024, NULL, 1, NULL);
+
+    /* Create OS Thread for APP_PUBSUB Tasks. */
+    xTaskCreate((TaskFunction_t) _APP_PUBSUB_Tasks,
+                "APP_PUBSUB Tasks",
+                1024, NULL, 1, NULL);
 
     /**************
      * Start RTOS * 
@@ -142,6 +163,7 @@ static void _SYS_Tasks ( void)
     USB_DEVICE_Tasks(sysObj.usbDevObject0);
     /* Maintain the TCP/IP Stack*/
     TCPIP_STACK_Task(sysObj.tcpip);
+    NET_PRES_Tasks(sysObj.netPres);
 
         /* Task Delay */
         vTaskDelay(1 / portTICK_PERIOD_MS);
@@ -165,6 +187,60 @@ static void _APP_WEB_CONFIG_Tasks(void)
     while(1)
     {
         APP_WEB_CONFIG_Tasks();
+        vTaskDelay(1 / portTICK_PERIOD_MS);
+    }
+}
+
+
+/*******************************************************************************
+  Function:
+    void _APP_LOGGER_Tasks ( void )
+
+  Summary:
+    Maintains state machine of APP_LOGGER.
+*/
+
+static void _APP_LOGGER_Tasks(void)
+{
+    while(1)
+    {
+        APP_LOGGER_Tasks();
+        vTaskDelay(1 / portTICK_PERIOD_MS);
+    }
+}
+
+
+/*******************************************************************************
+  Function:
+    void _APP_NETPIE_Tasks ( void )
+
+  Summary:
+    Maintains state machine of APP_NETPIE.
+*/
+
+static void _APP_NETPIE_Tasks(void)
+{
+    while(1)
+    {
+        APP_NETPIE_Tasks();
+        vTaskDelay(1 / portTICK_PERIOD_MS);
+    }
+}
+
+
+/*******************************************************************************
+  Function:
+    void _APP_PUBSUB_Tasks ( void )
+
+  Summary:
+    Maintains state machine of APP_PUBSUB.
+*/
+
+static void _APP_PUBSUB_Tasks(void)
+{
+    while(1)
+    {
+        APP_PUBSUB_Tasks();
         vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }

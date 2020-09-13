@@ -151,7 +151,7 @@ typedef enum
 
     APP_TCPIP_ERROR,
 
-} APP_STATE;
+} APP_WEB_CONFIG_STATE;
 
 typedef enum
 {
@@ -190,7 +190,7 @@ typedef struct
     SYS_FS_HANDLE fileHandle;
 
     /* application's current state */
-    APP_STATE state;
+    APP_WEB_CONFIG_STATE state;
 
     /* prescan's current state */
     APP_WIFI_PRESCAN_STATE prescanState;
@@ -201,7 +201,7 @@ typedef struct
     //uint32_t nBytesWritten;
 
     //uint32_t nBytesRead;
-} APP_DATA;
+} APP_WEB_CONFIG_DATA;
 
 /* It is intentionally declared this way to sync with WDRV_DEVICE_TYPE. */
 typedef enum {

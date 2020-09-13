@@ -383,6 +383,10 @@ extern "C" {
 #define NO_ASN
 #define NO_RSA
 
+/* MPLAB Harmony Net Presentation Layer Definitions*/
+#define NET_PRES_NUM_INSTANCE 1
+#define NET_PRES_NUM_SOCKETS 10
+
 /*** OSAL Configuration ***/
 #define OSAL_USE_RTOS          9
 
@@ -773,6 +777,12 @@ extern "C" {
 
 
 /*** Application Instance 0 Configuration ***/
+
+/*** Application Instance 1 Configuration ***/
+
+/*** Application Instance 2 Configuration ***/
+
+/*** Application Instance 3 Configuration ***/
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

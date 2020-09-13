@@ -5,13 +5,21 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f3" displayName="app" projectFiles="true">
+        <logicalFolder name="f2" displayName="parson" projectFiles="true">
+          <itemPath>../src/parson/parson.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="system_config" projectFiles="true">
           <logicalFolder name="f1" displayName="default" projectFiles="true">
             <logicalFolder name="f2" displayName="bsp" projectFiles="true">
               <itemPath>../src/system_config/default/bsp/bsp.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="framework" projectFiles="true">
-              <logicalFolder name="f1" displayName="system" projectFiles="true">
+              <logicalFolder name="f1" displayName="net" projectFiles="true">
+                <logicalFolder name="f1" displayName="pres" projectFiles="true">
+                  <itemPath>../src/system_config/default/framework/net/pres/net_pres_enc_glue.h</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="system" projectFiles="true">
                 <logicalFolder name="f1" displayName="devcon" projectFiles="true">
                   <logicalFolder name="f1" displayName="src" projectFiles="true">
                     <itemPath>../src/system_config/default/framework/system/devcon/src/sys_devcon_local.h</itemPath>
@@ -25,12 +33,18 @@
               </logicalFolder>
             </logicalFolder>
             <itemPath>../src/system_config/default/FreeRTOSConfig.h</itemPath>
+            <itemPath>../src/system_config/default/config.h</itemPath>
             <itemPath>../src/system_config/default/system_config.h</itemPath>
             <itemPath>../src/system_config/default/system_definitions.h</itemPath>
           </logicalFolder>
         </logicalFolder>
         <itemPath>../src/app_web_config.h</itemPath>
         <itemPath>../src/web_config_commands.h</itemPath>
+        <itemPath>../src/app_logger.h</itemPath>
+        <itemPath>../src/app_netpie.h</itemPath>
+        <itemPath>../src/app_pubsub.h</itemPath>
+        <itemPath>../src/register_mapping.h</itemPath>
+        <itemPath>../src/netpie2020_config.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="framework" projectFiles="true">
         <logicalFolder name="f1" displayName="crypto" projectFiles="true">
@@ -174,12 +188,20 @@
           <itemPath>../../../../framework/driver/driver.h</itemPath>
           <itemPath>../../../../framework/driver/driver_common.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f6" displayName="net" projectFiles="true">
+        <logicalFolder name="f4" displayName="net" projectFiles="true">
           <logicalFolder name="f1" displayName="pres" projectFiles="true">
+            <logicalFolder name="f1" displayName="src" projectFiles="true">
+              <itemPath>../../../../framework/net/pres/src/net_pres_local.h</itemPath>
+            </logicalFolder>
             <itemPath>../../../../framework/net/pres/net_pres.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_certstore.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_encryptionproviderapi.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_socketapi.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_transportapi.h</itemPath>
+            <itemPath>../../../../framework/net/pres/net_pres_socketapiconversion.h</itemPath>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f4" displayName="osal" projectFiles="true">
+        <logicalFolder name="f5" displayName="osal" projectFiles="true">
           <itemPath>../../../../framework/osal/osal.h</itemPath>
           <itemPath>../../../../framework/osal/osal_definitions.h</itemPath>
           <itemPath>../../../../framework/osal/osal_freertos.h</itemPath>
@@ -274,7 +296,7 @@
           </logicalFolder>
           <itemPath>../../../../framework/system/system.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="f5" displayName="tcpip" projectFiles="true">
+        <logicalFolder name="f6" displayName="tcpip" projectFiles="true">
           <logicalFolder name="f1" displayName="src" projectFiles="true">
             <logicalFolder name="f2" displayName="common" projectFiles="true">
               <itemPath>../../../../framework/tcpip/src/common/sys_fs_wrapper.h</itemPath>
@@ -448,6 +470,18 @@
         <itemPath>../../../../third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
         <itemPath>../../../../third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f4" displayName="third_party" projectFiles="true">
+        <logicalFolder name="f1" displayName="tcpip" projectFiles="true">
+          <logicalFolder name="f1" displayName="wolfmqtt" projectFiles="true">
+            <itemPath>../../../../third_party/tcpip/wolfmqtt/wolfmqtt/mqtt_types.h</itemPath>
+            <itemPath>../../../../third_party/tcpip/wolfmqtt/wolfmqtt/mqtt_socket.h</itemPath>
+            <itemPath>../../../../third_party/tcpip/wolfmqtt/wolfmqtt/mqtt_packet.h</itemPath>
+            <itemPath>../../../../third_party/tcpip/wolfmqtt/wolfmqtt/mqtt_client.h</itemPath>
+            <itemPath>../../../../third_party/tcpip/wolfmqtt/wolfmqtt/version.h</itemPath>
+            <itemPath>../../../../third_party/tcpip/wolfmqtt/wolfmqtt/visibility.h</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -457,6 +491,9 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f3" displayName="app" projectFiles="true">
+        <logicalFolder name="f2" displayName="parson" projectFiles="true">
+          <itemPath>../src/parson/parson.c</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="system_config" projectFiles="true">
           <logicalFolder name="f1" displayName="default" projectFiles="true">
             <logicalFolder name="f2" displayName="bsp" projectFiles="true">
@@ -473,7 +510,12 @@
                   </logicalFolder>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="system" projectFiles="true">
+              <logicalFolder name="f2" displayName="net" projectFiles="true">
+                <logicalFolder name="f1" displayName="pres" projectFiles="true">
+                  <itemPath>../src/system_config/default/framework/net/pres/net_pres_enc_glue.c</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+              <logicalFolder name="f3" displayName="system" projectFiles="true">
                 <logicalFolder name="f1" displayName="clk" projectFiles="true">
                   <logicalFolder name="f1" displayName="src" projectFiles="true">
                     <itemPath>../src/system_config/default/framework/system/clk/src/sys_clk_pic32mz.c</itemPath>
@@ -509,10 +551,15 @@
         </logicalFolder>
         <itemPath>../src/main.c</itemPath>
         <itemPath>../src/app_web_config.c</itemPath>
+        <itemPath>../src/web_config_commands.c</itemPath>
+        <itemPath>../src/app_logger.c</itemPath>
+        <itemPath>../src/app_netpie.c</itemPath>
+        <itemPath>../src/app_pubsub.c</itemPath>
         <itemPath>../src/http_print.c</itemPath>
         <itemPath>../src/custom_http_app.c</itemPath>
         <itemPath>../src/mpfs_img2.c</itemPath>
-        <itemPath>../src/web_config_commands.c</itemPath>
+        <itemPath>../src/register_dummy.c</itemPath>
+        <itemPath>../src/register_mapping.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="framework" projectFiles="true">
         <logicalFolder name="f1" displayName="crypto" projectFiles="true">
@@ -614,12 +661,19 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f3" displayName="osal" projectFiles="true">
+        <logicalFolder name="f3" displayName="net" projectFiles="true">
+          <logicalFolder name="f1" displayName="pres" projectFiles="true">
+            <logicalFolder name="f1" displayName="src" projectFiles="true">
+              <itemPath>../../../../framework/net/pres/src/net_pres.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="f4" displayName="osal" projectFiles="true">
           <logicalFolder name="f1" displayName="src" projectFiles="true">
             <itemPath>../../../../framework/osal/src/osal_freertos.c</itemPath>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f4" displayName="system" projectFiles="true">
+        <logicalFolder name="f5" displayName="system" projectFiles="true">
           <logicalFolder name="f2" displayName="command" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../../../../framework/system/command/src/sys_command.c</itemPath>
@@ -670,7 +724,7 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f5" displayName="tcpip" projectFiles="true">
+        <logicalFolder name="f6" displayName="tcpip" projectFiles="true">
           <logicalFolder name="f1" displayName="src" projectFiles="true">
             <logicalFolder name="f1" displayName="common" projectFiles="true">
               <itemPath>../../../../framework/tcpip/src/common/sys_fs_wrapper.c</itemPath>
@@ -701,7 +755,7 @@
             <itemPath>../../../../framework/tcpip/src/tcpip_packet.c</itemPath>
           </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="f6" displayName="usb" projectFiles="true">
+        <logicalFolder name="f7" displayName="usb" projectFiles="true">
           <logicalFolder name="f1" displayName="src" projectFiles="true">
             <logicalFolder name="f1" displayName="dynamic" projectFiles="true">
               <itemPath>../../../../framework/usb/src/dynamic/usb_device.c</itemPath>
@@ -731,6 +785,15 @@
         <itemPath>../../../../third_party/rtos/FreeRTOS/Source/event_groups.c</itemPath>
         <itemPath>../../../../third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f4" displayName="third_party" projectFiles="true">
+        <logicalFolder name="f1" displayName="tcpip" projectFiles="true">
+          <logicalFolder name="f1" displayName="wolfmqtt" projectFiles="true">
+            <itemPath>../../../../third_party/tcpip/wolfmqtt/src/mqtt_client.c</itemPath>
+            <itemPath>../../../../third_party/tcpip/wolfmqtt/src/mqtt_packet.c</itemPath>
+            <itemPath>../../../../third_party/tcpip/wolfmqtt/src/mqtt_socket.c</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -754,7 +817,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>pk4hybrid</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.40</languageToolchainVersion>
+        <languageToolchainVersion>1.42</languageToolchainVersion>
         <platform>2</platform>
       </toolsSet>
       <packs>
@@ -797,7 +860,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/system_config/default;../src/default;../../../../framework;../src/system_config/default/framework;../../../../framework/driver/wifi/mrf24wn/include;../../../../framework/driver/wifi/mrf24wn/wireless_driver/include;../../../../framework/driver/wifi/mrf24wn/wireless_driver_extension;../src/system_config/default/bsp;../../../../third_party/rtos/FreeRTOS/Source/include;../../../../third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ"/>
+                  value="../src;../src/system_config/default;../src/default;../../../../framework;../src/system_config/default/framework;../../../../framework/driver/wifi/mrf24wn/include;../../../../framework/driver/wifi/mrf24wn/wireless_driver/include;../../../../framework/driver/wifi/mrf24wn/wireless_driver_extension;../src/system_config/default/bsp;../../../../third_party/rtos/FreeRTOS/Source/include;../../../../third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../../../../third_party/tcpip/wolfmqtt"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -806,7 +869,7 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros" value="HAVE_CONFIG_H"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>
@@ -923,6 +986,7 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
+        <appendMe value="-DDO_LOG"/>
       </C32Global>
       <PICkit3PlatformTool>
         <property key="ADC 1" value="true"/>
@@ -1078,8 +1142,6 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d1fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
-        <property key="programmerToGoFilePath"
-                  value="/home/ipas/Workspace/MPLABX/harmony/v2_06/apps/test_wifi_curiosity/firmware/test_wifi_curiosity.X/debug/default/test_wifi_curiosity_ptg"/>
         <property key="programmerToGoImageName" value="test_wifi_curiosity_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
