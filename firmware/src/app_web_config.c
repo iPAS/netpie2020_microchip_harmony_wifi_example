@@ -102,7 +102,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   Remarks:
     Application strings and buffers are be defined outside this structure.
  */
-static APP_DATA s_appData;
+static APP_WEB_CONFIG_DATA s_appData;
 static BSP_LED_STATE s_LEDstate = BSP_LED_STATE_OFF;
 static IWPRIV_GET_PARAM s_app_get_param;
 static IWPRIV_SET_PARAM s_app_set_param;
