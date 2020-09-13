@@ -545,7 +545,10 @@ void APP_NETPIE_Tasks ( void )
                     TCPIP_STACK_NetBIOSName(netH);
 
                     // Retrieve MAC Address to store and convert to string
-                    TCPIP_NET_HANDLE netH = TCPIP_STACK_NetHandleGet("PIC32INT");
+                    TCPIP_NET_HANDLE netH = TCPIP_STACK_NetHandleGet(
+                            //"PIC32INT"
+                            "MRF24WN"
+                            );
                     TCPIP_MAC_ADDR* pAddr = (TCPIP_MAC_ADDR *)TCPIP_STACK_NetAddressMac(netH);
                     sprintf(appNetpieData.macAddress, "%02x%02x%02x%02x%02x%02x",
                             pAddr->v[0], pAddr->v[1], pAddr->v[2], pAddr->v[3], pAddr->v[4], pAddr->v[5]);
